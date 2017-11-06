@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "538846401013",
+    "firebase_url": "https://vehicleassistant-9ed3e.firebaseio.com",
+    "project_id": "vehicleassistant-9ed3e",
+    "storage_bucket": "vehicleassistant-9ed3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:538846401013:android:cc86e1a23e67c078",
+        "android_client_info": {
+          "package_name": "com.aironhight.vehicleassistant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "538846401013-hedv3gld4e3slrn0lu9768nlujdiv845.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEbAcaj-_k-4z_aklMgucxudJKZdYahz4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
