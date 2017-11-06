@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Vehicle Assistant</string>
+    <string name="emailHint">Enter your email</string>
+    <string name="PasswordHint">Password</string>
 </resources>
