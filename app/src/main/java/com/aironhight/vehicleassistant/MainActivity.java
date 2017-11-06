@@ -1,5 +1,6 @@
 package com.aironhight.vehicleassistant;
 
+import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
+
 
     FirebaseDatabase database;
     DatabaseReference dbr;
@@ -21,7 +23,4 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
     }
 
-    public void click(View v) {
-
-    }
 }
