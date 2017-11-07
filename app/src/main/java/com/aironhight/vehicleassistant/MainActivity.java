@@ -2,6 +2,7 @@ package com.aironhight.vehicleassistant;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,16 +17,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    FirebaseDatabase database;
-    DatabaseReference dbr;
-    ChildEventListener childEventListener;
     FirebaseAuth firebaseAuth;
 
     private Button buttonLogIn;
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void logIn() {
         String email = editTextEmail.getText().toString().trim();
-        String password = editTextPassword.getTransitionName().toString().trim();
+        String password = editTextPassword.getText().toString().trim();
 
         if(TextUtils.isEmpty(email)) {
             // email field is empty, login request is not sent.
@@ -78,22 +74,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 if(task.isSuccessful()) {
                     //logging in is successful. Start the Program activity
                 } else {
-                    Toast.makeText(this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);
+                    //Toast.makeText(this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);
                 }
             }
-        })
+        });
     }
 
     @Override
     public void onClick(View view) {
         if(view == buttonLogIn) {
             logIn();
-
-
         }
 
         if(view == registerTextView) {
-
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            finish();
         }
     }
 }
