@@ -86,6 +86,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     progressDialog.hide();
                     Toast.makeText(LoginActivity.this, "WOOOOOORK", Toast.LENGTH_SHORT).show();
                     //logging in is successful. Start the Program activity
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
                     progressDialog.hide();
                     Toast.makeText(LoginActivity.this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);

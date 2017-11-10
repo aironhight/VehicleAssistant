@@ -1,6 +1,7 @@
 package com.aironhight.vehicleassistant;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -70,6 +71,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     progressDialog.hide();
                     Log.i("Registration response", "Account successfully registered.");
                     Toast.makeText(RegisterActivity.this, "Registered successfully!", Toast.LENGTH_SHORT).show();
+                    finish();
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
                 } else {
                     progressDialog.hide();
