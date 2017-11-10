@@ -1,7 +1,6 @@
 package com.aironhight.vehicleassistant;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -19,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
 
     FirebaseAuth firebaseAuth;
@@ -35,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
 
         firebaseAuth = FirebaseAuth.getInstance();
 
@@ -48,6 +47,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         registerTextView.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == buttonLogIn) {
+            logIn();
+        }
+
+        if(view == registerTextView) {
+            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
+            finish();
+        }
     }
 
     private void logIn() {
@@ -72,23 +83,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
+                    progressDialog.hide();
+                    Toast.makeText(LoginActivity.this, "WOOOOOORK", Toast.LENGTH_SHORT).show();
                     //logging in is successful. Start the Program activity
                 } else {
-                    //Toast.makeText(this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);
+                    progressDialog.hide();
+                    Toast.makeText(LoginActivity.this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);
                 }
             }
         });
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == buttonLogIn) {
-            logIn();
-        }
-
-        if(view == registerTextView) {
-            startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
-            finish();
-        }
     }
 }
