@@ -6,4 +6,58 @@
     android:layout_height="match_parent"
     tools:context="com.aironhight.vehicleassistant.MainActivity">
 
+    <ListView
+        android:id="@+id/vehicleListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <!-- The list of vehicles -->
+
+
+
+    </ListView>
+
+    <SlidingDrawer
+        android:layout_gravity="left|start"
+        android:id="@+id/slidingDrawer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:content="@+id/drawerContent"
+        android:handle="@+id/handle">
+
+
+        <ImageButton
+            android:id="@+id/handle"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:contentDescription="TODO" />
+
+        <!-- The content of the drawer -->
+        <LinearLayout
+            android:id="@+id/drawerContent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You are inside"/>
+
+            <Button
+                android:id="@+id/testButtonz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="CLICK ME"
+                />
+
+
+
+
+
+        </LinearLayout>
+
+    </SlidingDrawer>
 </android.support.constraint.ConstraintLayout>

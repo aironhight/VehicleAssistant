@@ -27,6 +27,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText editTextEmail;
     private EditText editTextPassword;
     private TextView registerTextView;
+    private TextView forgottenPasswordTextView;
 
     private ProgressDialog progressDialog;
 
@@ -42,6 +43,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
         registerTextView = (TextView) findViewById(R.id.textViewRegister);
+        forgottenPasswordTextView = (TextView) findViewById(R.id.textViewForgottenPassword);
 
         buttonLogIn.setOnClickListener(this);
         registerTextView.setOnClickListener(this);
@@ -58,6 +60,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(view == registerTextView) {
             startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
             finish();
+        }
+
+        if(view == forgottenPasswordTextView) {
+
         }
     }
 
@@ -84,7 +90,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
                     progressDialog.hide();
-                    Toast.makeText(LoginActivity.this, "WOOOOOORK", Toast.LENGTH_SHORT).show();
                     //logging in is successful. Start the Program activity
                     finish();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));

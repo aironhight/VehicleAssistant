@@ -44,7 +44,14 @@
             android:text ="Don't have an account? Click here to register."
             android:textAlignment="center"
             />
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewForgottenPassword"
+            android:layout_marginTop="20dp"
+            android:text ="Forgot your password? Click here to reset it."
+            android:textAlignment="center"
+            />
     </LinearLayout>
 
 
