@@ -56,8 +56,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         if(view == addVehicleButton) {
-            Vehicle toSave = new Vehicle("Audi", "530", "M optic", 1997, 200000, "BMW128380901", user.getUid());
-            databaseReference.child("vehicles").push().setValue(toSave);
+            /*Vehicle toSave = new Vehicle("Audi", "530", "M optic", 1997, 200000, "BMW128380901", user.getUid());
+            Repair rep = new Repair("Spark plug", 70, 210000);
+            toSave.addRepair(rep);
+            toSave.setMileage(rep.getCurrentMileage());
+            databaseReference.child("vehicles").push().setValue(toSave);*/
+            startActivity(new Intent(getApplicationContext(), AddVehicleActivity.class));
         }
     }
 

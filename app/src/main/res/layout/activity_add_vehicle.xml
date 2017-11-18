@@ -40,14 +40,16 @@
              android:layout_height="@dimen/editTextHeight"
              android:layout_margin="@dimen/editTextMargin"
              android:id="@+id/vehicleYearEditText"
-             android:hint="Year of production"/>
+             android:hint="Year of production"
+             android:inputType="number"/>
 
          <EditText
              android:layout_width="@dimen/editTextWidth"
              android:layout_height="@dimen/editTextHeight"
              android:layout_margin="@dimen/editTextMargin"
              android:id="@+id/vehicleMileageEditText"
-             android:hint="Mileage"/>
+             android:hint="Mileage"
+             android:inputType="number"/>
 
          <EditText
              android:layout_width="@dimen/editTextWidth"
