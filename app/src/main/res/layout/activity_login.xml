@@ -15,18 +15,18 @@
         <EditText
             android:id="@+id/editTextEmail"
             android:hint="@string/emailHint"
-            android:layout_width="298dp"
-            android:layout_height="45dp"
-            android:layout_margin="15dp"
+            android:layout_width="@dimen/editTextWidth"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_margin="@dimen/editTextMargin"
             android:inputType="textEmailAddress"
              />
 
         <EditText
             android:id="@+id/editTextPassword"
             android:hint="@string/PasswordHint"
-            android:layout_width="298dp"
-            android:layout_height="45dp"
-            android:layout_margin="15dp"
+            android:layout_width="@dimen/editTextWidth"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_margin="@dimen/editTextMargin"
             android:inputType="textPassword"
             />
 

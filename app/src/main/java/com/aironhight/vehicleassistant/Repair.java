@@ -7,6 +7,8 @@ public class Repair {
     private double cost;
     private long currentMileage;
 
+    public Repair() { }
+
     public Repair(String repair, double cost, long currentMileage) {
         date = null;
         this.repair = repair;

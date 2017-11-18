@@ -18,6 +18,14 @@
 
     </ListView>
 
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/addVehicleTestButton"
+        android:text="Add a vehicle."
+        android:src="@drawable/ic_add_black_24dp"
+        />
+
     <SlidingDrawer
         android:layout_gravity="left|start"
         android:id="@+id/slidingDrawer"
@@ -40,18 +48,20 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="You are inside"/>
+                android:id="@+id/userTextView"/>
+
 
             <Button
-                android:id="@+id/testButtonz"
+                android:id="@+id/logOutButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="CLICK ME"
+                android:layout_marginTop="100dp"
+                android:text="Log out"
                 />
+
 
 
 

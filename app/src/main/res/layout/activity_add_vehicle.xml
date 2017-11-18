@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aironhight.vehicleassistant.AddVehicleActivity">
+
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+         android:orientation="vertical"
+         android:gravity="center"
+         >
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleMakeEditText"
+             android:hint="Make"/>
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleModelEditText"
+             android:hint="Model"/>
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleSpeciEditText"
+             android:hint="Specification"/>
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleYearEditText"
+             android:hint="Year of production"/>
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleMileageEditText"
+             android:hint="Mileage"/>
+
+         <EditText
+             android:layout_width="@dimen/editTextWidth"
+             android:layout_height="@dimen/editTextHeight"
+             android:layout_margin="@dimen/editTextMargin"
+             android:id="@+id/vehicleVINEditText"
+             android:hint="VIN number(Frame number)"/>
+
+         <Button
+             android:layout_width="194dp"
+             android:layout_height="55dp"
+             android:text="Add vehicle"
+             android:id="@+id/addVehicleButton"
+             />
+
+     </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

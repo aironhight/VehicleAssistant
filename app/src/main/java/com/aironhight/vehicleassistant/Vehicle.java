@@ -13,6 +13,8 @@ public class Vehicle {
     private long mileage;
     private ArrayList<Repair> repairs;
 
+    public Vehicle() {}
+
 
     public Vehicle(String make, String model, String specification, int year,long mileage, String VIN, String owner) {
         this.make = make;
