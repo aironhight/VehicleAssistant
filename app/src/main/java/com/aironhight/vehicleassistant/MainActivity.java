@@ -56,9 +56,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Vehicle selectedVehicle = (Vehicle) parent.getItemAtPosition(position);
                 Intent repairActivity = new Intent(getApplicationContext(), RepairActivity.class);
-                if(selectedVehicle.getRepairs() != null) {
-                    repairActivity.putExtra("repairs", selectedVehicle.getRepairs());
-                }
+                repairActivity.putExtra("vehicle", selectedVehicle);
                 startActivity(repairActivity);
             }
         });
