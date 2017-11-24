@@ -13,6 +13,7 @@ public class Vehicle implements Serializable{
     private String VIN;
     private long mileage;
     private ArrayList<Repair> repairs;
+    private String pushID;
 
     public Vehicle() {}
 
@@ -42,13 +43,25 @@ public class Vehicle implements Serializable{
 
     public long getMileage() { return mileage; }
 
-    public ArrayList<Repair> getRepairs() { return repairs; }
+    public ArrayList<Repair> getRepairs() {
+        return repairs;
+    }
+
+    public ArrayList<Repair> getRepairsWithoutDummy() {
+        ArrayList<Repair> ret = repairs;
+        ret.remove(0);
+        return ret;
+    }
+
+    public String getPushID() { return pushID; }
 
     public void addRepair(Repair repair) { repairs.add(repair); }
 
     public void setSpecification(String specification) { this.specification = specification ;}
 
     public void setMileage(long mileage) { this.mileage = mileage; }
+
+    public void setPushID (String id) { this.pushID = id; }
 
     public String toString() {
         String str = year + " " + make + " " + model;

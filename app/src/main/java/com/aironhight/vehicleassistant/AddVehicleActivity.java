@@ -79,9 +79,13 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
                 Long.valueOf(mileageEditText.getText().toString()),
                 vinEditText.getText().toString().toUpperCase().trim()
                 , user.getUid());
-        databaseReference.child("vehicles").push().setValue(toSave);
+
+        //toSave.addRepair(new Repair("sad", 0, toSave.getMileage()));
+        DatabaseReference mypostref = databaseReference.child("vehicles").push();
+        toSave.setPushID(mypostref.getKey());
+        mypostref.setValue(toSave);
         startActivity(new Intent(getApplicationContext(), MainActivity.class));
-       // Toast.makeText(MainActivity.this, "Vehicle added", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private void initialize(){

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.aironhight.vehicleassistant.AddRepairActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
+
+        <EditText
+            android:layout_width="@dimen/editTextWidth"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_margin="@dimen/editTextMargin"
+            android:id="@+id/repairEditText"
+            android:hint="Repair"/>
+
+        <EditText
+            android:layout_width="@dimen/editTextWidth"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_margin="@dimen/editTextMargin"
+            android:id="@+id/costEditText"
+            android:hint="Cost"
+            android:inputType="number"/>
+
+        <EditText
+            android:layout_width="@dimen/editTextWidth"
+            android:layout_height="@dimen/editTextHeight"
+            android:layout_margin="@dimen/editTextMargin"
+            android:id="@+id/currentMileageEditText"
+            android:hint="Mileage"
+            android:inputType="number"/>
+
+        <Button
+            android:layout_width="194dp"
+            android:layout_height="55dp"
+            android:text="Add repair"
+            android:id="@+id/saveRepairButton"
+            />
+
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
