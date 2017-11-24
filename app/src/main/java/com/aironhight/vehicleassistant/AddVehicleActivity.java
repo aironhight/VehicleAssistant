@@ -80,7 +80,6 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
                 vinEditText.getText().toString().toUpperCase().trim()
                 , user.getUid());
 
-        //toSave.addRepair(new Repair("sad", 0, toSave.getMileage()));
         DatabaseReference mypostref = databaseReference.child("vehicles").push();
         toSave.setPushID(mypostref.getKey());
         mypostref.setValue(toSave);

@@ -26,6 +26,9 @@ public class Repair implements Serializable{
     public long getCurrentMileage() { return currentMileage; }
     public String getVehicleUID() { return vehicleUID; }
 
+    public void setDate (Date date) { this.date = date; }
+
+
     public String toString(){
         return repair + "($" + cost +"), mileage: "+  currentMileage + "\n" +
                 "(" +date.getDate() +"."+ date.getMonth() + "." + (date.getYear()+1900) + ")";

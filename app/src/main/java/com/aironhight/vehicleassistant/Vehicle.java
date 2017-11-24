@@ -47,12 +47,6 @@ public class Vehicle implements Serializable{
         return repairs;
     }
 
-    public ArrayList<Repair> getRepairsWithoutDummy() {
-        ArrayList<Repair> ret = repairs;
-        ret.remove(0);
-        return ret;
-    }
-
     public String getPushID() { return pushID; }
 
     public void addRepair(Repair repair) { repairs.add(repair); }

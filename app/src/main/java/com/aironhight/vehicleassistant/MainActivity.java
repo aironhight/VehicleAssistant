@@ -1,13 +1,9 @@
 package com.aironhight.vehicleassistant;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -15,8 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,7 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ListView vehicleList;
     private Button logoutButton;
     private FirebaseAuth firebaseAuth;
-    private TextView userTextView;
+    private TextView userTextView, drawerSearchButton;
     private FirebaseUser user;
     private VehicleAdapter vehicleAdapter;
     private DatabaseReference databaseReference;
@@ -47,19 +41,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+        user =  FirebaseAuth.getInstance().getCurrentUser();
 
+        if(firebaseAuth.getInstance().getCurrentUser() == null) {
+            finish();
+            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        } else {
+            initialize();
 
-        initialize();
+            vehicleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Vehicle selectedVehicle = (Vehicle) parent.getItemAtPosition(position);
+                    Intent repairActivity = new Intent(getApplicationContext(), RepairActivity.class);
+                    repairActivity.putExtra("vehicle", selectedVehicle);
+                    startActivity(repairActivity);
+                }
+            });
+        }
 
-        vehicleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Vehicle selectedVehicle = (Vehicle) parent.getItemAtPosition(position);
-                Intent repairActivity = new Intent(getApplicationContext(), RepairActivity.class);
-                repairActivity.putExtra("vehicle", selectedVehicle);
-                startActivity(repairActivity);
-            }
-        });
     }
 
     @Override
@@ -73,17 +74,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(view == floatingActionButton) {
             startActivity(new Intent(getApplicationContext(), AddVehicleActivity.class));
         }
+
+        if(view == drawerSearchButton) {
+            startActivity(new Intent(getApplicationContext(), SearchActivity.class));
+        }
     }
 
     private void initialize() {
-        firebaseAuth = FirebaseAuth.getInstance();
 
-        if(firebaseAuth.getCurrentUser() == null) {
-            finish();
-            startActivity(new Intent(this, LoginActivity.class));
-        }
-
-        user = firebaseAuth.getCurrentUser();
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
         drawer = (SlidingDrawer) findViewById(R.id.slidingDrawer);
@@ -92,12 +90,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         logoutButton = (Button) findViewById(R.id.logOutButton);
         userTextView = (TextView) findViewById(R.id.userTextView);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.addVehicleFloatingButton);
+        drawerSearchButton = (TextView) findViewById(R.id.drawerSearchButton);
+
 
 
         vehicleAdapter = new VehicleAdapter(this, vehicles);
         vehicleList.setAdapter(vehicleAdapter);
         logoutButton.setOnClickListener(this);
         floatingActionButton.setOnClickListener(this);
+        drawerSearchButton.setOnClickListener(this);
         handle.setBackgroundResource(R.drawable.ic_arrow_upward_black_24dp);
 
         userTextView.setText("You are logged in as: " + user.getEmail());
@@ -107,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDrawerOpened() {
                 handle.setBackgroundResource(R.drawable.ic_arrow_downward_black_24dp);
                 vehicleList.setVisibility(View.GONE);
+                floatingActionButton.setVisibility(View.GONE);
             }
         });
 
@@ -115,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             public void onDrawerClosed() {
                 handle.setBackgroundResource(R.drawable.ic_arrow_upward_black_24dp);
                 vehicleList.setVisibility(View.VISIBLE);
+                floatingActionButton.setVisibility(View.VISIBLE);
             }
         });
 
@@ -128,6 +131,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     vehicleList.setAdapter(null);
                     for(DataSnapshot child : children) {
                         Vehicle veh = child.getValue(Vehicle.class);
+                        veh.setPushID(child.getKey());
                         vehicles.add(veh);
                     }
                     vehicleList.setAdapter(vehicleAdapter);

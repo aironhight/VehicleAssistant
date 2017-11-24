@@ -4,11 +4,8 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,10 +29,10 @@ public class RepairActivity extends AppCompatActivity implements Serializable, V
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
+        setTitle("Repairs");
 
-        //repairs = (ArrayList<Repair>)getIntent().getSerializableExtra("repairs");
         currentVehicle = (Vehicle)getIntent().getSerializableExtra("vehicle");
-        repairs = currentVehicle.getRepairsWithoutDummy();
+        repairs = new ArrayList<Repair>();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         repairList = (ListView)findViewById(R.id.repairListView);
         addRepairButton = (FloatingActionButton) findViewById(R.id.addRepairFloatingButton);
@@ -64,13 +61,6 @@ public class RepairActivity extends AppCompatActivity implements Serializable, V
 
             }
         });
-
-        if(repairs != null && repairs.size() > 0) {
-
-            repairList.setAdapter(repairAdapter);
-        } else {
-            Toast.makeText(this, "There are no repairs added to this vehicle.", Toast.LENGTH_LONG).show();
-        }
     }
 
     @Override

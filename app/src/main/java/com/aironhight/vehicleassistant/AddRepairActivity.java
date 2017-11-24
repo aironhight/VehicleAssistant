@@ -8,14 +8,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 
 public class AddRepairActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -28,15 +24,17 @@ public class AddRepairActivity extends AppCompatActivity implements View.OnClick
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_repair);
+        setTitle("Add Repair");
 
         databaseReference = FirebaseDatabase.getInstance().getReference();
         repair = (EditText) findViewById(R.id.repairEditText);
         cost = (EditText) findViewById(R.id.costEditText);
         currentMileage = (EditText) findViewById(R.id.currentMileageEditText);
         saveButton = (Button) findViewById(R.id.saveRepairButton);
+        transferToCurrentVehicle((Vehicle)getIntent().getSerializableExtra("vehicle"));
         saveButton.setOnClickListener(this);
 
-        currentVehicle = (Vehicle)getIntent().getSerializableExtra("vehicle");
+
     }
 
     @Override
@@ -53,39 +51,25 @@ public class AddRepairActivity extends AppCompatActivity implements View.OnClick
             }
 
 
-            final Repair rep = new Repair(repair.getText().toString().trim(), Integer.valueOf(cost.getText().toString()), Long.valueOf(currentMileage.getText().toString()), currentVehicle.getPushID());
+            Repair rep = new Repair(repair.getText().toString().trim(), Integer.valueOf(cost.getText().toString()), Long.valueOf(currentMileage.getText().toString()), currentVehicle.getPushID());
             currentVehicle.addRepair(rep);
             databaseReference.child("repairs").push().setValue(rep);
+            databaseReference.child("vehicles").child(currentVehicle.getPushID()).setValue(rep.getCurrentMileage());
             Intent intent = new Intent(getApplicationContext(), RepairActivity.class);
             intent.putExtra("vehicle", currentVehicle);
             startActivity(intent);
             finish();
-
-            /*Query query = databaseReference.child("vehicles").orderByChild("pu").equalTo(currentVehicle.getVIN());
-
-            query.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    if (dataSnapshot.exists()) {
-                        Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                        for(DataSnapshot child : children) {
-                            Vehicle veh = child.getValue(Vehicle.class);
-
-                            Iterable<DataSnapshot> children1 = child.getChildren();
-                            for(DataSnapshot child1 : children1) {
-                                ArrayList<Repair> repz = child1.child("repairs").getValue(ArrayList.class);
-                                repz.add(rep);
-
-                            }
-                        }
-                    }
-                }
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
-
-                }
-            });*/
-
         }
+    }
+
+    private void transferToCurrentVehicle(Vehicle v){
+        currentVehicle = new Vehicle(v.getMake(),
+                v.getModel(),
+                v.getSpecification(),
+                v.getYear(),
+                v.getMileage(),
+                v.getVIN(),
+                v.getOwner());
+        currentVehicle.setPushID(v.getPushID());
     }
 }

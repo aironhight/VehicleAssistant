@@ -55,6 +55,13 @@
                 android:id="@+id/userTextView"
                 android:gravity="center_horizontal"/>
 
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/drawerSearchButton"
+                android:gravity="center_horizontal"
+                android:text="Search for vehicles"/>
+
 
             <Button
                 android:id="@+id/logOutButton"
@@ -63,11 +70,6 @@
                 android:layout_marginTop="100dp"
                 android:text="Log out"
                 />
-
-
-
-
-
 
         </LinearLayout>
 
