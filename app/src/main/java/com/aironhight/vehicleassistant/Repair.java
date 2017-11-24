@@ -1,8 +1,9 @@
 package com.aironhight.vehicleassistant;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Date;
 
-public class Repair {
+public class Repair implements Serializable{
     private Date date;
     private String repair;
     private double cost;
@@ -23,8 +24,8 @@ public class Repair {
     public long getCurrentMileage() { return currentMileage; }
 
     public String toString(){
-        return repair + "($" + cost +"), "+ currentMileage + "\n" +
-                "(" +date.getDate() +"."+ date.getMonth() + "." + date.getYear() + ")";
+        return repair + "($" + cost +"), mileage: "+  currentMileage + "\n" +
+                "(" +date.getDate() +"."+ date.getMonth() + "." + (date.getYear()+1900) + ")";
 
 
 

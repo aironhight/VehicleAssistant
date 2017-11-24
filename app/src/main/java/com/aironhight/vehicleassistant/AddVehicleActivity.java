@@ -80,7 +80,8 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
                 vinEditText.getText().toString().toUpperCase().trim()
                 , user.getUid());
         databaseReference.child("vehicles").push().setValue(toSave);
-        Toast.makeText(this, "Vehicle added", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+       // Toast.makeText(MainActivity.this, "Vehicle added", Toast.LENGTH_SHORT).show();
     }
 
     private void initialize(){

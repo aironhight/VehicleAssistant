@@ -47,6 +47,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         buttonLogIn.setOnClickListener(this);
         registerTextView.setOnClickListener(this);
+        forgottenPasswordTextView.setOnClickListener(this);
 
         progressDialog = new ProgressDialog(this);
     }
@@ -63,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
 
         if(view == forgottenPasswordTextView) {
-
+            passwordReset();
         }
     }
 
@@ -99,5 +100,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
             }
         });
+    }
+
+    private void passwordReset() {
+        if(editTextEmail.getText().toString().length()<3) {
+            Toast.makeText(this, "Please enter your Email in the email field.", Toast.LENGTH_LONG).show();
+        } else {
+            progressDialog.setMessage("Please wait...");
+            progressDialog.show();
+            firebaseAuth.sendPasswordResetEmail(editTextEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(task.isSuccessful()) {
+                        progressDialog.hide();
+                        Toast.makeText(LoginActivity.this, "A password reset email was sent to your email address.", Toast.LENGTH_LONG).show();
+                    } else {
+                        progressDialog.hide();
+                        Toast.makeText(LoginActivity.this, "Failed to send password reset email: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
     }
 }

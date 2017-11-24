@@ -1,8 +1,9 @@
 package com.aironhight.vehicleassistant;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Vehicle {
+public class Vehicle implements Serializable{
 
     private String owner;
     private String make;

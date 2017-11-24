@@ -3,11 +3,13 @@ package com.aironhight.vehicleassistant;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -29,7 +31,7 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SlidingDrawer drawer;
-    private ImageButton handle, addVehicleButton;
+    private ImageButton handle;
     private final ArrayList<Vehicle> vehicles = new ArrayList<Vehicle>();
     private ListView vehicleList;
     private Button logoutButton;
@@ -38,13 +40,28 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private FirebaseUser user;
     private VehicleAdapter vehicleAdapter;
     private DatabaseReference databaseReference;
+    private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         initialize();
+
+        vehicleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Vehicle selectedVehicle = (Vehicle) parent.getItemAtPosition(position);
+                Intent repairActivity = new Intent(getApplicationContext(), RepairActivity.class);
+                if(selectedVehicle.getRepairs() != null) {
+                    repairActivity.putExtra("repairs", selectedVehicle.getRepairs());
+                }
+                startActivity(repairActivity);
+            }
+        });
     }
 
     @Override
@@ -55,12 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(new Intent(this, LoginActivity.class));
         }
 
-        if(view == addVehicleButton) {
-            /*Vehicle toSave = new Vehicle("Audi", "530", "M optic", 1997, 200000, "BMW128380901", user.getUid());
-            Repair rep = new Repair("Spark plug", 70, 210000);
-            toSave.addRepair(rep);
-            toSave.setMileage(rep.getCurrentMileage());
-            databaseReference.child("vehicles").push().setValue(toSave);*/
+        if(view == floatingActionButton) {
             startActivity(new Intent(getApplicationContext(), AddVehicleActivity.class));
         }
     }
@@ -80,22 +92,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         handle = (ImageButton) findViewById(R.id.handle);
         vehicleList = (ListView) findViewById(R.id.vehicleListView);
         logoutButton = (Button) findViewById(R.id.logOutButton);
-        addVehicleButton = (ImageButton) findViewById(R.id.addVehicleTestButton);
         userTextView = (TextView) findViewById(R.id.userTextView);
+        floatingActionButton = (FloatingActionButton) findViewById(R.id.addVehicleFloatingButton);
 
-        //vehicles.add(new Vehicle("BMW", "530", "M optic", 1997, 200000, "BMW128380901", "Hristo"));
-        //vehicles.add(new Vehicle("VW", "Bora","2.0", 2000, 235000, "VW128380901", "Hristo"));
 
         vehicleAdapter = new VehicleAdapter(this, vehicles);
         vehicleList.setAdapter(vehicleAdapter);
-        addVehicleButton.setOnClickListener(this);
         logoutButton.setOnClickListener(this);
-
+        floatingActionButton.setOnClickListener(this);
         handle.setBackgroundResource(R.drawable.ic_arrow_upward_black_24dp);
 
         userTextView.setText("You are logged in as: " + user.getEmail());
-
-        //Query query = databaseReference.child("vehicles").orderByChild("make").equalTo("BMW");
 
         drawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
             @Override
@@ -113,23 +120,27 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        databaseReference.child("vehicles").addValueEventListener(new ValueEventListener() {
+        Query query = databaseReference.child("vehicles").orderByChild("owner").equalTo(user.getUid());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-                vehicles.clear();
-                vehicleList.setAdapter(null);
-                for(DataSnapshot child : children) {
-                    Vehicle veh = child.getValue(Vehicle.class);
-                    vehicles.add(veh);
+                if (dataSnapshot.exists()) {
+                    Iterable<DataSnapshot> children = dataSnapshot.getChildren();
+                    vehicles.clear();
+                    vehicleList.setAdapter(null);
+                    for(DataSnapshot child : children) {
+                        Vehicle veh = child.getValue(Vehicle.class);
+                        vehicles.add(veh);
+                    }
+                    vehicleList.setAdapter(vehicleAdapter);
+                    }
                 }
-                vehicleList.setAdapter(vehicleAdapter);
-            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+
     }
 }
