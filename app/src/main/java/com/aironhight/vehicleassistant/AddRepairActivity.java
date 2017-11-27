@@ -54,7 +54,7 @@ public class AddRepairActivity extends AppCompatActivity implements View.OnClick
             Repair rep = new Repair(repair.getText().toString().trim(), Integer.valueOf(cost.getText().toString()), Long.valueOf(currentMileage.getText().toString()), currentVehicle.getPushID());
             currentVehicle.addRepair(rep);
             databaseReference.child("repairs").push().setValue(rep);
-            databaseReference.child("vehicles").child(currentVehicle.getPushID()).setValue(rep.getCurrentMileage());
+            databaseReference.child("vehicles").child(currentVehicle.getPushID()).child("mileage").setValue(rep.getCurrentMileage());
             Intent intent = new Intent(getApplicationContext(), RepairActivity.class);
             intent.putExtra("vehicle", currentVehicle);
             startActivity(intent);
