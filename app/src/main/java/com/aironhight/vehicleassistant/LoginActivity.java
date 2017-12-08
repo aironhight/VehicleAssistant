@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else {
                     progressDialog.hide();
-                    Toast.makeText(LoginActivity.this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT);
+                    Toast.makeText(LoginActivity.this, "Email/Password combination doesn't match.", Toast.LENGTH_SHORT).show();
                 }
             }
         });

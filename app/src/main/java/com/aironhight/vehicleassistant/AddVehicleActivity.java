@@ -32,6 +32,8 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_vehicle);
 
+        firebaseAuth = FirebaseAuth.getInstance();
+
         if(firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(this, LoginActivity.class));
@@ -47,8 +49,7 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
                     modelEditText .getText().toString().length() >= 2 &&
                     yearEditText.getText().toString().length() >= 4 &&
                     mileageEditText.getText().toString().length() >= 2 &&
-                    vinEditText.getText().toString().length() >= 11 &&
-                    uniqueVIN(vinEditText.getText().toString().trim().toUpperCase())) {
+                    vinEditText.getText().toString().length() >= 11) {
                 addVehicle();
             } else {
                 Toast.makeText(this, "Some of the fields were not filled correctly.", Toast.LENGTH_SHORT).show();
@@ -67,15 +68,11 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
                 vinEditText.getText().toString().toUpperCase().trim()
                 , user.getUid());
 
-        if(uniqueVIN(vinEditText.getText().toString().trim())) {
             DatabaseReference mypostref = databaseReference.child("vehicles").push();
             toSave.setPushID(mypostref.getKey());
             mypostref.setValue(toSave);
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
             finish();
-        } else {
-            Toast.makeText(this, "A Vehicle with this VIN number was already registered.", Toast.LENGTH_SHORT).show();
-        }
     }
 
     private void initialize() {
@@ -96,21 +93,6 @@ public class AddVehicleActivity extends AppCompatActivity implements View.OnClic
 
         addVehicleButton = (Button) findViewById(R.id.addVehicleButton);
         addVehicleButton.setOnClickListener(this);
-    }
-
-    private boolean uniqueVIN(String VIN) {
-        final boolean[] iHateMyLife = new boolean[1];
-
-        Query query = databaseReference.child("vehicles").orderByChild("vin").equalTo(VIN);
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                iHateMyLife[0] = !dataSnapshot.exists();
-            }
-            public void onCancelled (DatabaseError databaseError){
-
-            }
-        });
-        return iHateMyLife[0];
     }
 
 }
