@@ -1,16 +1,24 @@
 package com.aironhight.vehicleassistant;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.MenuItem;
+import android.view.View;
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private VehicleAdapter vehicleAdapter;
     private DatabaseReference databaseReference;
     private FloatingActionButton floatingActionButton;
+    private Vehicle longclickedVehicle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +68,63 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(repairActivity);
                 }
             });
+
         }
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.longclick_item_mainactivity, menu);
+
+        AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        longclickedVehicle = (Vehicle) vehicleList.getItemAtPosition(acmi.position);
+
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.deleteOptionMainActivity:
+                new AlertDialog.Builder(this)
+                        .setTitle("Really Delete?")
+                        .setMessage("Are you sure you want to permanently remove the vehicle from your list?")
+                        .setNegativeButton(android.R.string.no, null)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                DatabaseReference dbNodeToRemove = FirebaseDatabase.getInstance().getReference().getRoot()
+                                        .child("vehicles")
+                                        .child(longclickedVehicle.getPushID());
+
+                                dbNodeToRemove.setValue(null); //
+                                updateVehicleList();
+                            }
+                        }).create().show();
+                return true;
+
+            default:
+                return super.onContextItemSelected(item);
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(floatingActionButton.getVisibility() == View.VISIBLE) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            MainActivity.super.onBackPressed();
+                        }
+                    }).create().show();
+        } else {
+            drawer.animateClose();
+        }
     }
 
     @Override
@@ -92,35 +156,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         floatingActionButton = (FloatingActionButton) findViewById(R.id.addVehicleFloatingButton);
         drawerSearchButton = (TextView) findViewById(R.id.drawerSearchButton);
 
-
-
         vehicleAdapter = new VehicleAdapter(this, vehicles);
+        vehicleList.setAdapter(null);
         vehicleList.setAdapter(vehicleAdapter);
+        vehicleList.setLongClickable(true);
         logoutButton.setOnClickListener(this);
         floatingActionButton.setOnClickListener(this);
         drawerSearchButton.setOnClickListener(this);
-        handle.setBackgroundResource(R.drawable.ic_arrow_upward_black_24dp);
+        handle.setBackgroundResource(R.drawable.ic_drag_handle_black_140x40dp);
 
+        registerForContextMenu(vehicleList);
         userTextView.setText("You are logged in as: " + user.getEmail());
 
         drawer.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
             @Override
             public void onDrawerOpened() {
-                handle.setBackgroundResource(R.drawable.ic_arrow_downward_black_24dp);
-                vehicleList.setVisibility(View.GONE);
-                floatingActionButton.setVisibility(View.GONE);
+                drawerOpen();
             }
         });
 
         drawer.setOnDrawerCloseListener(new SlidingDrawer.OnDrawerCloseListener() {
             @Override
             public void onDrawerClosed() {
-                handle.setBackgroundResource(R.drawable.ic_arrow_upward_black_24dp);
-                vehicleList.setVisibility(View.VISIBLE);
-                floatingActionButton.setVisibility(View.VISIBLE);
+                drawerClose();
             }
         });
 
+        updateVehicleList();
+
+    }
+
+    private void updateVehicleList() {
         Query query = databaseReference.child("vehicles").orderByChild("owner").equalTo(user.getUid());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -135,14 +201,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         vehicles.add(veh);
                     }
                     vehicleList.setAdapter(vehicleAdapter);
-                    }
                 }
+            }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
             }
         });
+    }
 
+    private void drawerClose() {
+        vehicleList.setVisibility(View.VISIBLE);
+        floatingActionButton.setVisibility(View.VISIBLE);
+    }
+
+    private void drawerOpen() {
+        vehicleList.setVisibility(View.GONE);
+        floatingActionButton.setVisibility(View.GONE);
     }
 }

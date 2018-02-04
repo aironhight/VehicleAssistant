@@ -22,17 +22,17 @@ public class VehicleAdapter extends ArrayAdapter<Vehicle> {
 
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        View listItemView = convertView;
+            View listItemView = convertView;
 
-        if(listItemView == null) {
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.vehicle_list_layout, parent, false);
-        }
+            if(listItemView == null) {
+                listItemView = LayoutInflater.from(getContext()).inflate(R.layout.vehicle_list_layout, parent, false);
+            }
 
-        Vehicle currentVehicle = getItem(position);
+            Vehicle currentVehicle = getItem(position);
 
-        TextView carInfo = (TextView)listItemView.findViewById(R.id.vehicleInfoTextView);
-        carInfo.setText(currentVehicle.toString());
+            TextView carInfo = (TextView)listItemView.findViewById(R.id.vehicleInfoTextView);
+            carInfo.setText(currentVehicle.toString());
 
-        return listItemView;
+            return listItemView;
     }
 }

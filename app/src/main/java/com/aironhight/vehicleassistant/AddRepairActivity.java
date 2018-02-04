@@ -35,6 +35,10 @@ public class AddRepairActivity extends AppCompatActivity implements View.OnClick
         saveButton.setOnClickListener(this);
 
 
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.drawable.ic_add_black_24dp);
+
     }
 
     @Override

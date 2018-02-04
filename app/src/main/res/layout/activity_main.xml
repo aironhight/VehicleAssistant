@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.aironhight.vehicleassistant.MainActivity">
+    tools:context="com.aironhight.vehicleassistant.MainActivity"
+    android:descendantFocusability="blocksDescendants">
 
     <ListView
         android:id="@+id/vehicleListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants">
 
         <!-- The list of vehicles -->
 
@@ -25,7 +27,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/ic_add_black_24dp"
-        android:backgroundTint="@color/colorPrimary"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false" />
 
     <SlidingDrawer
         android:layout_gravity="left|start"
@@ -33,34 +38,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:content="@+id/drawerContent"
-        android:handle="@+id/handle">
+        android:handle="@+id/handle"
+        android:focusable="false"
+        android:clickable="false"
+        android:focusableInTouchMode="false"
+        android:textIsSelectable="false">
 
 
         <ImageButton
             android:id="@+id/handle"
             android:layout_width="wrap_content"
             android:layout_height="25dp"
-            android:contentDescription="TODO" />
+            android:contentDescription="TODO"
+            android:focusable="false"
+            android:clickable="false"
+            android:focusableInTouchMode="false"/>
 
         <!-- The content of the drawer -->
         <LinearLayout
             android:id="@+id/drawerContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:descendantFocusability="blocksDescendants">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/userTextView"
-                android:gravity="center_horizontal"/>
+                android:gravity="center_horizontal"
+                android:textIsSelectable="false"/>
 
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/drawerSearchButton"
                 android:gravity="center_horizontal"
-                android:text="Search for vehicles"/>
+                android:text="Search for vehicles"
+                android:focusable="false"
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                android:textIsSelectable="false"/>
 
 
             <Button
@@ -69,7 +87,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="100dp"
                 android:text="Log out"
-                />
+                android:focusable="false"
+                android:clickable="false"
+                android:focusableInTouchMode="false"
+                android:textIsSelectable="false"/>
 
         </LinearLayout>
 
