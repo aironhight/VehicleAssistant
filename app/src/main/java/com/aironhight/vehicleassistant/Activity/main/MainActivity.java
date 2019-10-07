@@ -1,4 +1,4 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.Activity.main;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
@@ -13,12 +13,16 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
 import android.widget.SlidingDrawer;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.aironhight.vehicleassistant.Activity.AddVehicleActivity;
+import com.aironhight.vehicleassistant.Activity.LoginActivity;
+import com.aironhight.vehicleassistant.Activity.SearchActivity;
+import com.aironhight.vehicleassistant.Activity.repair.RepairActivity;
+import com.aironhight.vehicleassistant.model.Vehicle;
+import com.aironhight.vehicleassistant.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -80,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         AdapterView.AdapterContextMenuInfo acmi = (AdapterView.AdapterContextMenuInfo) menuInfo;
         longclickedVehicle = (Vehicle) vehicleList.getItemAtPosition(acmi.position);
-
     }
 
     @Override
@@ -101,6 +104,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                                 updateVehicleList();
                             }
                         }).create().show();
+                return true;
+
+            case R.id.detailsOptionMainActivity:
+                //TO BE IMPLEMENTED
+                Toast.makeText(MainActivity.this, "NOT YET IMPLEMENTED", Toast.LENGTH_SHORT).show();
                 return true;
 
             default:

@@ -1,4 +1,4 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;

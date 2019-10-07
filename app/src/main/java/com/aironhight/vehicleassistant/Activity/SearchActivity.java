@@ -1,4 +1,4 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aironhight.vehicleassistant.model.Repair;
+import com.aironhight.vehicleassistant.model.Vehicle;
+import com.aironhight.vehicleassistant.R;
+import com.aironhight.vehicleassistant.Activity.repair.RepairAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;

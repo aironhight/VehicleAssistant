@@ -1,10 +1,10 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.Activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,6 +12,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.aironhight.vehicleassistant.Activity.main.MainActivity;
+import com.aironhight.vehicleassistant.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -21,7 +23,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
 
 
-    FirebaseAuth firebaseAuth;
+    private FirebaseAuth firebaseAuth;
 
     private Button buttonLogIn;
     private EditText editTextEmail;
@@ -94,7 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()) {
-                    progressDialog.hide();
+                    progressDialog.dismiss();
                     //logging in is successful. Start the Program activity
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                     finish();
@@ -107,23 +109,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void passwordReset() {
-        if(editTextEmail.getText().toString().length()<3) {
-            Toast.makeText(this, "Please enter your Email in the email field.", Toast.LENGTH_LONG).show();
-        } else {
-            progressDialog.setMessage("Please wait...");
-            progressDialog.show();
-            firebaseAuth.sendPasswordResetEmail(editTextEmail.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if(task.isSuccessful()) {
-                        progressDialog.hide();
-                        Toast.makeText(LoginActivity.this, "A password reset email was sent to your email address.", Toast.LENGTH_LONG).show();
-                    } else {
-                        progressDialog.hide();
-                        Toast.makeText(LoginActivity.this, "Failed to send password reset email: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
+        startActivity(new Intent(getApplicationContext(), ForgottenPasswordActivity.class));
+
+
     }
 }

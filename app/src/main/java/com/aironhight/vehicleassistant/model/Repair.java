@@ -1,6 +1,5 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.model;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Repair implements Serializable{

@@ -1,4 +1,4 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +9,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.aironhight.vehicleassistant.Activity.repair.RepairActivity;
+import com.aironhight.vehicleassistant.model.Repair;
+import com.aironhight.vehicleassistant.model.Vehicle;
+import com.aironhight.vehicleassistant.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -48,8 +52,7 @@ public class AddRepairActivity extends AppCompatActivity implements View.OnClick
                     || cost.getText().toString() == null
                     || currentMileage.getText().toString() == null
                     || repair.getText().toString().length() < 2
-                    || Integer.valueOf(cost.getText().toString()) < 0
-                    || Long.valueOf(currentMileage.getText().toString()) < currentVehicle.getMileage()) {
+                    || Integer.valueOf(cost.getText().toString()) < 0) {
                 Toast.makeText(this, "Some of the fields were not filled correctly!", Toast.LENGTH_LONG).show();
                 return;
             }

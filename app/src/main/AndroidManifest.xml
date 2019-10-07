@@ -11,14 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".RegisterActivity"
-            android:parentActivityName=".LoginActivity">
+        <activity android:name=".Activity.ForgottenPasswordActivity"
+            android:parentActivityName=".Activity.LoginActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activity.LoginActivity" />
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.LoginActivity" />
+        <activity
+            android:name=".Activity.RegisterActivity"
+            android:parentActivityName=".Activity.LoginActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".Activity.main.MainActivity" />
+        </activity>
+        <activity android:name=".Activity.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,25 +33,26 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AddVehicleActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".Activity.AddVehicleActivity"
+            android:parentActivityName=".Activity.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activity.main.MainActivity" />
         </activity>
         <activity
-            android:name=".RepairActivity"
-            android:parentActivityName=".MainActivity">
+            android:name=".Activity.repair.RepairActivity"
+            android:parentActivityName=".Activity.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activity.main.MainActivity" />
         </activity>
-        <activity android:name=".AddRepairActivity" />
-        <activity android:name=".SearchActivity"
-            android:parentActivityName=".MainActivity">
+        <activity android:name=".Activity.AddRepairActivity" />
+        <activity
+            android:name=".Activity.SearchActivity"
+            android:parentActivityName=".Activity.main.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
+                android:value=".Activity.main.MainActivity" />
         </activity>
     </application>
 

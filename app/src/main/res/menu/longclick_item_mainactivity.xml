@@ -4,4 +4,8 @@
         android:id="@+id/deleteOptionMainActivity"
         android:title="Delete"/>
 
+    <item
+        android:id="@+id/detailsOptionMainActivity"
+        android:title="Details"/>
+
 </menu>

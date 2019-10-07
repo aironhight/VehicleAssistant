@@ -1,4 +1,4 @@
-package com.aironhight.vehicleassistant;
+package com.aironhight.vehicleassistant.Activity.repair;
 
 import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
@@ -6,6 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
+
+import com.aironhight.vehicleassistant.Activity.AddRepairActivity;
+import com.aironhight.vehicleassistant.model.Repair;
+import com.aironhight.vehicleassistant.model.Vehicle;
+import com.aironhight.vehicleassistant.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
